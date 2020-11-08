@@ -23,13 +23,30 @@ jobs:
           release_name: ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset 
+      - name: Upload MacOS Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./bin/templar-macos-${{ env.RELEASE_VERSION}}.zip
-          asset_name: template-macos-${{ env.RELEASE_VERSION }}.zip
+          asset_name: templar-macos-${{ env.RELEASE_VERSION }}.zip
+          asset_content_type: application/zip
+      - name: Upload Windows Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/templar-windows-${{ env.RELEASE_VERSION}}.zip
+          asset_name: templar-windows-${{ env.RELEASE_VERSION }}.zip
+          asset_content_type: application/zip
+      - name: Upload Linux Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/templar-linux-${{ env.RELEASE_VERSION}}.zip
+          asset_name: templar-linux-${{ env.RELEASE_VERSION }}.zip
           asset_content_type: application/zip
