@@ -22,10 +22,10 @@ func main() {
 		SilenceErrors: true,
 		Args: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {
-				return errors.New("repository name or url is required")
+				return errors.New("repository source is required")
 			}
 			if !common.Pattern.Match([]byte(args[0])) {
-				return errors.New("unable to parse " + args[0])
+				return errors.New("unable to parse source" + args[0])
 			}
 			return nil
 		},
@@ -38,7 +38,10 @@ func main() {
 			if err != nil {
 				return err
 			}
-			command.PromptUserParameters(data)
+			err = command.PromptUserParameters(data)
+			if err != nil {
+				return err
+			}
 			for _, file := range data.Files {
 				file = path.Join(out, file)
 				err := rendering.RenderTemplateFile(file, data)
@@ -46,12 +49,21 @@ func main() {
 					return err
 				}
 			}
-			return common.GetFs().Remove(path.Join(out, "template.json"))
+			fs := common.GetFs()
+			err = fs.Remove(path.Join(out, "template.json"))
+			if err != nil {
+				return err
+			}
+			err = fs.RemoveAll(path.Join(out, ".git"))
+			if err != nil {
+				return err
+			}
+			return nil
 		},
 	}
 	err := rootCmd.Execute()
 	if err != nil {
-		println(err)
+		println(err.Error())
 		os.Exit(1)
 	}
 }
