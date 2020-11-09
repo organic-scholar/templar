@@ -14,6 +14,7 @@ import (
 var version = "1.0.0"
 
 func main() {
+	var use = "git"
 	var rootCmd = &cobra.Command{
 		Use:           "templar",
 		Short:         "Templar is a project scaffolding tool",
@@ -30,7 +31,7 @@ func main() {
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			out, err := common.CloneRepo(args)
+			out, err := common.CloneRepo(args, use)
 			if err != nil {
 				return nil
 			}
@@ -49,18 +50,14 @@ func main() {
 					return err
 				}
 			}
-			fs := common.GetFs()
-			err = fs.Remove(path.Join(out, "template.json"))
-			if err != nil {
-				return err
-			}
-			err = fs.RemoveAll(path.Join(out, ".git"))
+			err = common.CleanUp(out)
 			if err != nil {
 				return err
 			}
 			return nil
 		},
 	}
+	rootCmd.Flags().StringVar(&use, "use", "git", "clone using git or https")
 	err := rootCmd.Execute()
 	if err != nil {
 		println(err.Error())

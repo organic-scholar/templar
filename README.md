@@ -11,7 +11,7 @@ Download templar binary for your platform from the release page.
 
 ## Usage
 
-In your project template repository create a template.json file e.g
+In your project template repository commit a template.json file e.g
 
 ```
 {
@@ -26,15 +26,27 @@ In your project template repository create a template.json file e.g
 
 ```
 
-In the above file, parameters are rendered into the mentioned source files using the mustache template engine.
+In the above file, parameters are rendered into the mentioned source files using the mustache template engine. It will also prompt the user to override parameters.
 
-It will also prompt the user to override parameters.
+
+You can run templar as follow
 
 ```
-templar github:user/repo .
-templar github:user/repo my-app
+templar github:user/repo 
 templar bitbucket:user/repo
 ```
+
+Templar clones your repository in current working directory but can also specify another one.
+```
+templar github:user/repo my-app
+```
+
+By default templar uses ssh to clone if you wan to use https
+```
+templar github:user/repo --use=https
+```
+
+
 ## License
 
-[MIT](LICENSE.md).
+[MIT](LICENSE.md)

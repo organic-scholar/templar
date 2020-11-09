@@ -8,6 +8,7 @@ import (
 )
 
 func PromptUserParameters(data *rendering.TemplateData) error {
+	println("Please enter parameters values")
 	for key, value := range data.Parameters {
 		prompt := promptui.Prompt{
 			Label:   key,
@@ -23,7 +24,6 @@ func PromptUserParameters(data *rendering.TemplateData) error {
 		if err != nil {
 			return err
 		}
-		println(input)
 		data.Parameters[key] = input
 	}
 	return nil
