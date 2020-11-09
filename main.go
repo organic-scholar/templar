@@ -2,8 +2,10 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path"
+	"text/tabwriter"
 
 	"github.com/organic-scholar/templar/command"
 	"github.com/organic-scholar/templar/common"
@@ -43,13 +45,17 @@ func main() {
 			if err != nil {
 				return err
 			}
+			w := new(tabwriter.Writer)
+			w.Init(os.Stdout, 0, 8, 4, '\t', 0)
 			for _, file := range data.Files {
-				file = path.Join(out, file)
-				err := rendering.RenderTemplateFile(file, data)
+				err := rendering.RenderTemplateFile(path.Join(out, file), data)
 				if err != nil {
-					return err
+					fmt.Fprintln(w, "\tCreate\t"+file+"\t"+err.Error())
+				} else {
+					fmt.Fprintln(w, "\tCreate\t"+file)
 				}
 			}
+			w.Flush()
 			err = common.CleanUp(out)
 			if err != nil {
 				return err

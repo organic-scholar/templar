@@ -1,6 +1,6 @@
 # Templar
 
-![templar logo](./images/logo.png)
+![templar logo](./images/logo-white.png)
 
 
 Templar clones project from the remote git repository and substitute placeholders in source files.
@@ -29,7 +29,7 @@ In your project template repository commit a template.json file e.g
 In the above file, parameters are rendered into the mentioned source files using the mustache template engine. It will also prompt the user to override parameters.
 
 
-You can run templar as follow
+You can use templar as follow
 
 ```
 templar github:user/repo 
