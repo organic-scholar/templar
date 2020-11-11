@@ -1,13 +1,13 @@
 # Templar
 
-![templar logo](./images/logo-white.png)
+![templar logo](./images/logo.png)
 
 
 Templar clones project from the remote git repository and substitute placeholders in source files.
 
 ## Installtion
 
-Download templar binary for your platform from the release page.
+Download templar binary for your platform from the [release page](https://github.com/organic-scholar/templar/releases).
 
 ## Usage
 
